@@ -1,28 +1,36 @@
 import React from "react";
 import "../styles/Table.css";
 import Student from "./Student";
-import students from "../students.json";
 import TableHeader from "./TableHeader";
 
 class Directory extends React.Component {
   state = {
     sortBy: "firstName",
-    direction: 1
+    order: 1,
+    students: []
   };
 
-  customSort = students => {
-    if (this.state.sortBy === "firstName")
-      return this.state.direction
-        ? students.sort((a, b) => (a.firstName > b.firstName ? 1 : -1))
-        : students.sort((a, b) => (a.firstName > b.firstName ? -1 : 1));
-    else
-      return this.state.direction ? students.sort((a, b) => (a.lastName > b.lastName ? 1 : -1)) : students.sort((a, b) => (a.lastName > b.lastName ? -1 : 1));
-  };
+  componentDidMount() {
+    fetch("https://randomuser.me/api/?results=20&nat=us")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ students: data.results });
+      })
+      .catch(console.log);
+  }
+
+  // customSort = () => {
+  //   console.log("STUDENTS ARE", this.state.students);
+
+  //   const students = [...this.state.students];
+  //   if (this.state.sortBy === "firstName")
+  //     return this.state.order ? students.sort((a, b) => (a.firstName > b.firstName ? 1 : -1)) : students.sort((a, b) => (a.firstName > b.firstName ? -1 : 1));
+  //   else return this.state.order ? students.sort((a, b) => (a.lastName > b.lastName ? 1 : -1)) : students.sort((a, b) => (a.lastName > b.lastName ? -1 : 1));
+  // };
 
   sortBy = event => {
-    console.log("clicked:", event.target.id);
     if (event.target.id === this.state.sortBy) {
-      this.setState({ direction: !this.state.direction });
+      this.setState({ direction: !this.state.order });
     } else {
       this.setState({
         sortBy: event.target.id
@@ -37,10 +45,11 @@ class Directory extends React.Component {
         <div className="jumbotron">
           <table>
             <thead>
-              <TableHeader sortStudents={this.sortBy} columns={["First Name", "Last Name", "Email Address", "Phone Number"]} />
+              <TableHeader sortStudents={this.sortBy} columns={["First Name", "Last Name", "City", "Email", "Phone", "DoB"]} />
             </thead>
             <tbody>
-              {this.customSort(students).map((info, id) => (
+              {console.log(this.state.students)}
+              {this.state.students.map((info, id) => (
                 <Student key={id} student={info} />
               ))}
             </tbody>
