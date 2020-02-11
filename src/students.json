@@ -1,0 +1,20 @@
+[
+  {
+    "firstName": "A",
+    "lastName": "X",
+    "emailAddress": "ax@email.com",
+    "phoneNumber": "123"
+  },
+  {
+    "firstName": "B",
+    "lastName": "Y",
+    "emailAddress": "by@email.com",
+    "phoneNumber": "456"
+  },
+  {
+    "firstName": "C",
+    "lastName": "Z",
+    "emailAddress": "cz@email.com",
+    "phoneNumber": "789"
+  }
+]
