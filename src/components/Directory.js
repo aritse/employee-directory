@@ -2,10 +2,31 @@ import React from "react";
 import "../styles/Table.css";
 import Student from "./Student";
 import students from "../students.json";
+import TableHeader from "./TableHeader";
 
 class Directory extends React.Component {
   state = {
-    students: students
+    students: students,
+    sortBy: "firstName"
+  };
+
+  // sort = () => {
+  //   switch (this.state.sortBy) {
+  //     case 0:
+  //       this.state.students.sort((a, b) => (a.firstName > b.firstName ? 1 : -1));
+  //       break;
+  //     case 1:
+  //       this.state.students.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
+
+  sortBy = event => {
+    this.setState({
+      sortBy: event.target.value
+    });
   };
 
   render() {
@@ -15,15 +36,10 @@ class Directory extends React.Component {
         <div className="jumbotron">
           <table>
             <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
-              </tr>
+              <TableHeader sortStudents={this.sortBy} columns={["First Name", "Last Name", "Email Address", "Phone Number"]} />
             </thead>
             <tbody>
-              {this.state.students.map((info, id) => (
+              {this.state.students.sort().map((info, id) => (
                 <Student key={id} student={info} />
               ))}
             </tbody>
