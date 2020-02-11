@@ -6,27 +6,28 @@ import TableHeader from "./TableHeader";
 
 class Directory extends React.Component {
   state = {
-    students: students,
-    sortBy: "firstName"
+    sortBy: "firstName",
+    direction: 1
   };
 
-  // sort = () => {
-  //   switch (this.state.sortBy) {
-  //     case 0:
-  //       this.state.students.sort((a, b) => (a.firstName > b.firstName ? 1 : -1));
-  //       break;
-  //     case 1:
-  //       this.state.students.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
+  customSort = students => {
+    if (this.state.sortBy === "firstName")
+      return this.state.direction
+        ? students.sort((a, b) => (a.firstName > b.firstName ? 1 : -1))
+        : students.sort((a, b) => (a.firstName > b.firstName ? -1 : 1));
+    else
+      return this.state.direction ? students.sort((a, b) => (a.lastName > b.lastName ? 1 : -1)) : students.sort((a, b) => (a.lastName > b.lastName ? -1 : 1));
+  };
 
   sortBy = event => {
-    this.setState({
-      sortBy: event.target.value
-    });
+    console.log("clicked:", event.target.id);
+    if (event.target.id === this.state.sortBy) {
+      this.setState({ direction: !this.state.direction });
+    } else {
+      this.setState({
+        sortBy: event.target.id
+      });
+    }
   };
 
   render() {
@@ -39,7 +40,7 @@ class Directory extends React.Component {
               <TableHeader sortStudents={this.sortBy} columns={["First Name", "Last Name", "Email Address", "Phone Number"]} />
             </thead>
             <tbody>
-              {this.state.students.sort().map((info, id) => (
+              {this.customSort(students).map((info, id) => (
                 <Student key={id} student={info} />
               ))}
             </tbody>
