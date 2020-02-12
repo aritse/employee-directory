@@ -22,3 +22,6 @@ The user should be able to:
 
   * Filter the users by state
   
+![Demo](Directory.gif)
+
+![Screenshot](screenshot.PNG)
