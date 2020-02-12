@@ -1,30 +1,30 @@
 import React from "react";
+import "../styles/Thumb.css";
+
+const style = {
+  textAlign: "center",
+  backgroundColor: "#6a1b9a",
+  color: "white"
+};
 
 function TableHeader(props) {
   return (
     <tr>
       <th>
-        <button id="firstName" className="btn btn-primary" onClick={props.sortStudents}>
+        <button id="first" className="btn btn-primary  th-button" onClick={props.sortBy}>
           {props.columns[0]}
         </button>
       </th>
       <th>
-        <button id="lastName" className="btn btn-primary" onClick={props.sortStudents}>
+        <button id="last" className="btn btn-primary  th-button" onClick={props.sortBy}>
           {props.columns[1]}
         </button>
       </th>
-      <th>
-        <button id="city" className="btn btn-primary" onClick={props.sortStudents}>
-          {props.columns[2]}
-        </button>
-      </th>
-      <th>{props.columns[3]}</th>
-      <th>{props.columns[4]}</th>
-      <th>
-        <button id="dob" className="btn btn-primary" onClick={props.sortStudents}>
-          {props.columns[5]}
-        </button>
-      </th>
+      <th style={style}>{props.columns[2]}</th>
+      <th style={style}>{props.columns[3]}</th>
+      <th style={style}>{props.columns[4]}</th>
+      <th style={style}>{props.columns[5]}</th>
+      <th style={style}>{props.columns[6]}</th>
     </tr>
   );
 }

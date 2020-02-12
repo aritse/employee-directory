@@ -1,0 +1,6 @@
+#thumbnail.grow {
+  transition: all 0.2s ease-in-out;
+}
+#thumbnail:hover {
+  transform: scale(1.5);
+}
