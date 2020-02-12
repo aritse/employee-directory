@@ -6,7 +6,7 @@ import TableHeader from "./TableHeader";
 class Directory extends React.Component {
   state = {
     sortBy: "first",
-    order: 1,
+    ascending: true,
     students: []
   };
 
@@ -21,13 +21,13 @@ class Directory extends React.Component {
 
   customSort = students => {
     if (this.state.sortBy === "first")
-      if (this.state.order) students.sort((a, b) => (a.name.first > b.name.first ? 1 : -1));
+      if (this.state.ascending) students.sort((a, b) => (a.name.first > b.name.first ? 1 : -1));
       else students.sort((a, b) => (a.name.first > b.name.first ? -1 : 1));
     if (this.state.sortBy === "last")
-      if (this.state.order) students.sort((a, b) => (a.name.last > b.name.last ? 1 : -1));
+      if (this.state.ascending) students.sort((a, b) => (a.name.last > b.name.last ? 1 : -1));
       else students.sort((a, b) => (a.name.last > b.name.last ? -1 : 1));
     if (this.state.sortBy === "dob")
-      if (this.state.order) students.sort((a, b) => (a.dob > b.dob ? 1 : -1));
+      if (this.state.ascending) students.sort((a, b) => (a.dob > b.dob ? 1 : -1));
       else students.sort((a, b) => (a.dob > b.dob ? -1 : 1));
 
     return students;
@@ -35,8 +35,8 @@ class Directory extends React.Component {
 
   sortBy = event => {
     const colName = event.target.id;
-    if (colName === this.state.sortBy) this.setState({ order: !this.state.order });
-    else this.setState({ sortBy: colName, order: 1 });
+    if (colName === this.state.sortBy) this.setState({ ascending: !this.state.ascending });
+    else this.setState({ sortBy: colName, ascending: true });
   };
 
   render() {
@@ -46,7 +46,7 @@ class Directory extends React.Component {
         <div className="jumbotron">
           <table>
             <thead>
-              <TableHeader order={this.order} sortBy={this.sortBy} columns={["First Name", "Last Name", "DoB", "Address", "Email", "Phone", "Photo"]} />
+              <TableHeader ascending={this.ascending} sortBy={this.sortBy} columns={["First Name", "Last Name", "DoB", "Address", "Email", "Phone", "Photo"]} />
             </thead>
             <tbody>
               {this.customSort(this.state.students).map((info, id) => (
