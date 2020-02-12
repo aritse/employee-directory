@@ -7,6 +7,7 @@ class Directory extends React.Component {
   state = {
     sortBy: "first",
     ascending: true,
+    all: [],
     students: []
   };
 
@@ -14,7 +15,7 @@ class Directory extends React.Component {
     fetch("https://randomuser.me/api/?results=20&nat=us")
       .then(res => res.json())
       .then(data => {
-        this.setState({ students: data.results });
+        this.setState({ all: data.results, students: data.results });
       })
       .catch(console.log);
   }
@@ -39,6 +40,14 @@ class Directory extends React.Component {
     else this.setState({ sortBy: colName, ascending: true });
   };
 
+  filterByState = state => {
+    if (state === "All") {
+      this.setState({ students: this.state.all });
+    } else {
+      this.setState({ students: this.state.all.filter(student => student.location.state === state) });
+    }
+  };
+
   render() {
     return (
       <div className="container">
@@ -46,7 +55,12 @@ class Directory extends React.Component {
         <div className="jumbotron">
           <table>
             <thead>
-              <TableHeader ascending={this.ascending} sortBy={this.sortBy} columns={["First Name", "Last Name", "DoB", "Address", "Email", "Phone", "Photo"]} />
+              <TableHeader
+                filterByState={this.filterByState}
+                ascending={this.ascending}
+                sortBy={this.sortBy}
+                columns={["First Name", "Last Name", "DoB", "Address", "Email", "Phone", "Photo"]}
+              />
             </thead>
             <tbody>
               {this.customSort(this.state.students).map((info, id) => (
